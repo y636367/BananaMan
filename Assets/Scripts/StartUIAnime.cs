@@ -181,6 +181,8 @@ public class StartUIAnime : MonoBehaviour
     /// <returns></returns>
     IEnumerator AnimationOverCheck()
     {
+        yield return new WaitForSeconds(0.1f);
+
         while (!string.Equals(BananaMan_.GetCurrentAnimatorStateInfo(0).IsName("Happy Idle"),Now_Action) &&
             BananaMan_.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f)
         {
