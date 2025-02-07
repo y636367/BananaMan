@@ -4,7 +4,7 @@
 PC 플레이 Altf4, 항아리 게임 류 의 포디언 게임(Foddian game)<br>
 언제나 갇혀서 바깥의 넓은 하늘을 선망하던 바나나맨... 당신은 이 바나나맨과 함께 좁은 집을 탈출하여 넓은 하늘을 선사해주자!
 봉제인형(Ragdoll)인 바나나맨은 움직임이 서툴다 바나나맨의 조작법을 잘 숙지하도록! :mask: <br>
-link : https://drive.google.com/file/d/1E3ltclpDpQTaBOfn1ZGZVAavqFVBRf4x/view?usp=drive_link
+link : https://drive.google.com/file/d/1E3ltclpDpQTaBOfn1ZGZVAavqFVBRf4x/view?usp=sharing
 </div>
 
 ## 목차
