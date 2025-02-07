@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,8 +7,8 @@ public class Player : MonoBehaviour
     public static Player instance;
     private class BoneTransform
     {
-        public Vector3 Position {  get; set; }                                                              // 위치 유지 위한 공개 속성
-        public Quaternion Rotation { get; set; }                                                            // 회전 상태 유지를 위한 공개 속성
+        public Vector3 Position { get; set; }                                                              // 위치 유지 위한 공개 속성
+        public Quaternion Rotation { get; set; }                                                           // 회전 상태 유지를 위한 공개 속성
     }
 
     #region Variable
@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
     private float marginError;
     [SerializeField]
     private float _elapseResetBonesTime;                                                        // 뼈대 재설정시 까지 경과 시간
-    
+
     private BoneTransform[] _standUpBoneTransforms;                                             // 기상 애니메이션시의 모든뼈대 변환 저장 필드
     private BoneTransform[] _ragdollBoneTransforms;                                             // 랙돌의 모든 뼈대 의 값 저장 필드
     private Transform[] _bone;                                                                  // 각 뼈대의 실제 변환 값 저장
@@ -126,7 +126,7 @@ public class Player : MonoBehaviour
     public float playerVelocity;
 
     [SerializeField]
-    private Vector3 moveDir { get; set;}
+    private Vector3 moveDir { get; set; }
     [SerializeField]
     private Vector2 wallCheck;
 
@@ -160,7 +160,7 @@ public class Player : MonoBehaviour
         _standUpBoneTransforms = new BoneTransform[_bone.Length];                                           // 뼈대의 구성요소 수 만큼의 배열 크기 설정
         _ragdollBoneTransforms = new BoneTransform[_bone.Length];
 
-        for(int boneIndex=0; boneIndex<_bone.Length; boneIndex++)                                           // 각 배열 요소 초기화
+        for (int boneIndex = 0; boneIndex < _bone.Length; boneIndex++)                                           // 각 배열 요소 초기화
         {
             _standUpBoneTransforms[boneIndex] = new BoneTransform();
             _ragdollBoneTransforms[boneIndex] = new BoneTransform();
@@ -365,13 +365,13 @@ public class Player : MonoBehaviour
         }
     }
     /// <summary>
-    /// 상자형태의 광선을 쏴서 캐릭터가 바닥에 닿아있는지 여부 확인 함수
+    /// 구형태의 광선을 쏴서 캐릭터가 바닥에 닿아있는지 여부 확인 함수
     /// </summary>
     private void GroundCheck()
     {
         int layerMask = (-1) - (1 << LayerMask.NameToLayer("NotObstacle"));
 
-        isGrounded = Physics.SphereCast(controller.GetComponent<Collider>().bounds.center, SphereRadius, -transform.up, out hit, Height/2, layerMask);                     // 일반 Raycast를 쏘면 점으로 여부를 검사하기에 좀 더 정확하게 확인하기 위함
+        isGrounded = Physics.SphereCast(controller.GetComponent<Collider>().bounds.center, SphereRadius, -transform.up, out hit, Height / 2, layerMask);                     // 일반 Raycast를 쏘면 점으로 여부를 검사하기에 좀 더 정확하게 확인하기 위함
 
         if (isGrounded && !GroundCheck_Hold)
         {
@@ -386,7 +386,7 @@ public class Player : MonoBehaviour
             anotherStep = true;
             StopCoroutine(nameof(PlayerHeightCheck));
 
-            if(PreviousPosition_y != transform.position.y)
+            if (PreviousPosition_y != transform.position.y)
                 PreviousPosition_y = transform.position.y;
 
             playerVelocity = -2.0f;
@@ -621,13 +621,13 @@ public class Player : MonoBehaviour
 
         float dis = wallCheck.x;                                                                                                                    // 캐릭터의 크기에 맞게끔 조절(캐릭터보다 0.03~0.05 정도 크게)
 
-        if(Physics.Raycast(front_ray,out _hit, dis))                                                                                                // 캐릭터 기준 정면에 붙었을 시
+        if (Physics.Raycast(front_ray, out _hit, dis))                                                                                                // 캐릭터 기준 정면에 붙었을 시
         {
             HitForSlip(transform.forward);                                                                                                          // 캐릭터의 정면 위치 값 전달
             return true;
         }
 
-        if(Physics.Raycast(back_ray, out _hit, dis) || Physics.Raycast(right_ray, out _hit, dis) || Physics.Raycast(left_ray, out _hit, dis))       // 캐릭터 기준 후면, 옆면에 붙었을 시
+        if (Physics.Raycast(back_ray, out _hit, dis) || Physics.Raycast(right_ray, out _hit, dis) || Physics.Raycast(left_ray, out _hit, dis))       // 캐릭터 기준 후면, 옆면에 붙었을 시
         {
             HitForSlip(hit.normal);                                                                                                                 // 캐릭터의 Hit한 지점 전달
             return true;
@@ -648,7 +648,7 @@ public class Player : MonoBehaviour
         }
 
         transform.position = Vector3.Lerp(transform.position, slip_dir, Time.deltaTime);                                                // 캐릭터를 전달받은 HitPoint로 이동
-    }                                                   
+    }
     /// <summary>
     /// 실제 이동
     /// </summary>
@@ -695,7 +695,7 @@ public class Player : MonoBehaviour
 
         _hipsBone = animator.GetBoneTransform(HumanBodyBones.Hips);
 
-        animator.SetFloat("Pos X", 0f);    
+        animator.SetFloat("Pos X", 0f);
         animator.SetFloat("Pos Y", 0f);
 
         animator.SetBool("nowJump", false);
@@ -851,7 +851,7 @@ public class Player : MonoBehaviour
     }
     private void ReSettingPosition()
     {
-        GameManager.instance.rm.Transmission_Player(this);
+        GameManager.instance.rm.Transmission_Player();
     }
     /// <summary>
     /// (기상 애니메이션 끝 부분에 이벤트 삽입)기상 애니메이션 Bool값 변형으로 탈출 및 bool 제한 변수 값 변경
@@ -859,7 +859,7 @@ public class Player : MonoBehaviour
     private void ReturnCharacter()
     {
         animator.SetBool("isRagdoll", false);                                                                                               // 기상 애니메이션 종료 제어
-        isRagdoll = false;                                                                                                                  
+        isRagdoll = false;
     }
     /// <summary>
     /// 랙돌 후 캐릭터의 위치가 일정 시간 변하지 않고 위치한다면 랙돌 해제
@@ -931,7 +931,7 @@ public class Player : MonoBehaviour
         positionOffset = transform.rotation * positionOffset;                                                                   // 캐릭터의 회전값에 이 오프셋 곱계산
         transform.position -= positionOffset;                                                                                   // 오프셋만틈의 값을 캐릭터의 위치에서 빼주어 오차 범위 계산
 
-        if(Physics.Raycast(transform.position,Vector3.down,out RaycastHit hitInfo))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo))
         {
             transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
         }
@@ -943,7 +943,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void PopulateBoneTransforms(BoneTransform[] boneTransforms)
     {
-        for(int boneIndex=0; boneIndex<boneTransforms.Length; boneIndex++)
+        for (int boneIndex = 0; boneIndex < boneTransforms.Length; boneIndex++)
         {
             boneTransforms[boneIndex].Position = _bone[boneIndex].localPosition;                                                        // 뼈대의 월드 좌표가 아닌 로컬 좌표값이 필요하기에 로컬좌표값 할당
             boneTransforms[boneIndex].Rotation = _bone[boneIndex].localRotation;
@@ -959,9 +959,9 @@ public class Player : MonoBehaviour
         Vector3 positionBeforeSampling = transform.position;                                                                            // 샘플링 전 오브젝트의 위치, 회전 값 저장
         Quaternion rotationBeforeSampling = transform.rotation;
 
-        foreach(AnimationClip clip in animator.runtimeAnimatorController.animationClips)                                                // 애니메이션 클립의 이름으로 '기상' 애니메이션 찾기
+        foreach (AnimationClip clip in animator.runtimeAnimatorController.animationClips)                                                // 애니메이션 클립의 이름으로 '기상' 애니메이션 찾기
         {
-            if(clip.name == clipName)
+            if (clip.name == clipName)
             {
                 clip.SampleAnimation(gameObject, 0);                                                                                    // 캐릭터 오브젝트에 '기상' 애니메이션의 첫 프레임의 애니메이션을 적용, 게임 오브젝트의 위치, 회전 업데이트
                 PopulateBoneTransforms(_standUpBoneTransforms);                                                                         // '기상' 애니메이션의 값을 오브젝트에 업데이트한 값들을 그대로 할당
@@ -979,7 +979,7 @@ public class Player : MonoBehaviour
     {
         float elapsedPercentage = _elapseResetBonesTime / _timeToResetBone;                                                             // 경과 시간을 총 시간으로 나누어 경과 비율 계산
 
-        for(int boneIndex=0;boneIndex<_bone.Length;boneIndex++)
+        for (int boneIndex = 0; boneIndex < _bone.Length; boneIndex++)
         {
             _bone[boneIndex].localPosition = Vector3.Lerp(_ragdollBoneTransforms[boneIndex].Position,                                   // 래그돌 포지션 상태의 뼈를 애니메이션 포지션 상태의 뼈 위치로 전환, 이때 계산한 백분율로 보간
                 _standUpBoneTransforms[boneIndex].Position, elapsedPercentage);
@@ -1016,7 +1016,7 @@ public class Player : MonoBehaviour
         if (Application.isPlaying)
         {
             Gizmos.color = Color.black;
-            Gizmos.DrawWireSphere(controller.GetComponent<Collider>().bounds.center + (-transform.up * Height/2), SphereRadius);                            // SphereCast
+            Gizmos.DrawWireSphere(controller.GetComponent<Collider>().bounds.center + (-transform.up * Height / 2), SphereRadius);                            // SphereCast
 
             Vector3 ray_spawn_pos = transform.position + Vector3.up * wallCheck.y;                                                                          // RaycastSlip
 
@@ -1035,4 +1035,3 @@ public class Player : MonoBehaviour
 }
 // SetFloat("a", b, v, d) : a = 파라미터 이름, b = 파라미터에 할당하고자 하는 값, v = 이전의 값에서 현재 할당하려 하는 값 전환 시간, d = v에서 전환 시간에 사용되기 위한 detaTime
 // SampleAnimation(a, n) :  a = 오브젝트, n 프레임(시간) / 미리 렌더링 하지 않고 실시간으로 애니메이션을 오브젝트에 적용할때 사용(회전, 크기 ,위치 등의 값을 업데이트함)
-

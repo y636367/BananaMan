@@ -1825,6 +1825,7 @@ MonoBehaviour:
   isDefault: 0
   Flag: 0
   PointName: RagdollTutorial
+  PointNumber: 1
   Lamp: {fileID: 6672246013945998122}
 --- !u!65 &190531494
 BoxCollider:
@@ -8202,6 +8203,7 @@ MonoBehaviour:
   isDefault: 1
   Flag: 0
   PointName: StartPoint
+  PointNumber: 0
   Lamp: {fileID: 0}
 --- !u!1 &725462967
 GameObject:
@@ -20868,9 +20870,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Default_RespawnPoint: {x: 0, y: 0, z: 0}
   New_RespawnPoint: {x: 0, y: 0, z: 0}
+  respawns: []
   Default: 0
   NowPointHeight: 0
   nowPointName: 
+  nowPointNumber: 0
+  player: {fileID: 1252508464085678743}
 --- !u!4 &1719733400
 Transform:
   m_ObjectHideFlags: 0
@@ -25743,6 +25748,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1252508464085678741}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1252508464085678743 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7075651903342011378, guid: ab1cb93eb4c8581489ccd61137a9677a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1252508464085678741}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c66c872a746df4aa0c162978053918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1611256500495916543
 PrefabInstance:
   m_ObjectHideFlags: 0

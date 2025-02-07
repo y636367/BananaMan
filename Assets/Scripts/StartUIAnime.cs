@@ -8,7 +8,7 @@ public class StartUIAnime : MonoBehaviour
 {
     #region Variable
     [System.Serializable]
-    public class After_ : UnityEvent { };                                                       // ÀÌº¥Æ® Àû¿ëÀ» À§ÇÑ ÀÎ½ºÅÏ½º Å¬·¡½º »ı¼º
+    public class After_ : UnityEvent { };                                                       // ì´ë²¤íŠ¸ ì ìš©ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤ ìƒì„±
     public After_ Next_;
 
     [SerializeField]
@@ -20,7 +20,7 @@ public class StartUIAnime : MonoBehaviour
 
     [Space(10f)]
     [SerializeField]
-    private Animator BananaMan_;                                                                // BananaMan °ü·Ã º¯¼ö
+    private Animator BananaMan_;                                                                // BananaMan ê´€ë ¨ ë³€ìˆ˜
     [SerializeField]
     private Button BananaManActingButton;
     private string Now_Action;
@@ -34,6 +34,10 @@ public class StartUIAnime : MonoBehaviour
     private Button Apply_Button;
     [SerializeField]
     private Button Exit_Button;
+    [SerializeField]
+    private Button NewGame_Button;
+    [SerializeField]
+    private Button Continue_Button;
 
     [Space(10f)]
     [SerializeField]
@@ -53,11 +57,16 @@ public class StartUIAnime : MonoBehaviour
     [Tooltip("ClearCanvas")]
     [SerializeField]
     private GameObject ClearCanvas;
+
+    [Space(10f)]
+    [Tooltip("Continue")]
+    [SerializeField]
+    private bool ContinueGame;
     #endregion
     private void Awake()
     {
         UI_animator.gameObject.SetActive(false);
-        BananaManActingButton.gameObject.SetActive(false);                                      // ¹öÆ° ºñÈ°¼ºÈ­·Î ¾Ö´Ï¸ŞÀÌ¼Ç ³¡³¯¶§±îÁö ºÒÇÊ¿äÇÑ µ¿ÀÛ ¹Ì ¹æÁö
+        BananaManActingButton.gameObject.SetActive(false);                                      // ë²„íŠ¼ ë¹„í™œì„±í™”ë¡œ ì• ë‹ˆë©”ì´ì…˜ ëë‚ ë•Œê¹Œì§€ ë¶ˆí•„ìš”í•œ ë™ì‘ ë¯¸ ë°©ì§€
         Main = Camera.main;
 
         try
@@ -70,7 +79,7 @@ public class StartUIAnime : MonoBehaviour
         Buttons_Interactable_false();
     }
     /// <summary>
-    /// ÃÊ±â ÀÌº¥Æ®Ãß°¡·Î ¼³Á¤ÇØ¾ßÇÒ ÇÔ¼ö
+    /// ì´ˆê¸° ì´ë²¤íŠ¸ì¶”ê°€ë¡œ ì„¤ì •í•´ì•¼í•  í•¨ìˆ˜
     /// </summary>
     public void Init_Event()
     {
@@ -79,7 +88,7 @@ public class StartUIAnime : MonoBehaviour
         BindingPanel.instance.Init();
     }
     /// <summary>
-    /// ¹öÆ° ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
     private void Buttons_Interactable_false()
     {
@@ -88,7 +97,7 @@ public class StartUIAnime : MonoBehaviour
         Exit_Button.interactable = false;
     }
     /// <summary>
-    /// ¹öÆ° È°¼ºÈ­ ¹× ÀÌº¥Æ® Ãß°¡
+    /// ë²„íŠ¼ í™œì„±í™” ë° ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     private void Buttons_Interactable_true()
     {
@@ -101,14 +110,14 @@ public class StartUIAnime : MonoBehaviour
         Get_Exit_Buttons_Event();
     }
     /// <summary>
-    /// ³ª¸ÓÁö ¹öÆ°µé ¹× Á¶ÀÛ¹ı On
+    /// ë‚˜ë¨¸ì§€ ë²„íŠ¼ë“¤ ë° ì¡°ì‘ë²• On
     /// </summary>
     public void On_etc()
     {
         UI_animator.SetTrigger("Etc");
     }
     /// <summary>
-    /// ¹öÆ°µé È°¼ºÈ­ ¹× ½ÃÀÛ ¾Ö´Ï¸ŞÀÌÅÍ ´õ ÀÌ»ó ÇÊ¿ä ¾ø±â¿¡ ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ë“¤ í™œì„±í™” ë° ì‹œì‘ ì• ë‹ˆë©”ì´í„° ë” ì´ìƒ í•„ìš” ì—†ê¸°ì— ë¹„í™œì„±í™”
     /// </summary>
     public void UI_Off()
     {
@@ -117,7 +126,7 @@ public class StartUIAnime : MonoBehaviour
         UI_animator.enabled = false;
     }
     /// <summary>
-    /// Ã¹ ½ÃÀÛ½Ã Ä³¸¯ÅÍ ÀÎ»ç ¸ğ¼Ç
+    /// ì²« ì‹œì‘ì‹œ ìºë¦­í„° ì¸ì‚¬ ëª¨ì…˜
     /// </summary>
     public void Banana_Hi()
     {
@@ -133,15 +142,15 @@ public class StartUIAnime : MonoBehaviour
         On_etc();
     }
     /// <summary>
-    /// ·£´ı ¸ğ¼ÇÀ» À§ÇÑ ÇÔ¼ö
+    /// ëœë¤ ëª¨ì…˜ì„ ìœ„í•œ í•¨ìˆ˜
     /// </summary>
     public void BananaMan_Random_Acting()
     {
-        BananaManActingButton.interactable = false;                                                         // ºÒÇÊ¿äÇÑ Ãß°¡ µ¿ÀÛ ¾ø¾Ö±â À§ÇØ ¹öÆ° ºñÈ°¼ºÈ­
+        BananaManActingButton.interactable = false;                                                         // ë¶ˆí•„ìš”í•œ ì¶”ê°€ ë™ì‘ ì—†ì• ê¸° ìœ„í•´ ë²„íŠ¼ ë¹„í™œì„±í™”
 
         int random_value = UnityEngine.Random.Range(1, 10);
 
-        switch (random_value)                                                           // ÇöÀç È°¼ºÈ­ µÇ°í ÀÖ´Â ¸ğ¼ÇÀÌ IdleÀÎÁö ¾Æ´ÑÁö È®ÀÎÀ» À§ÇØ string º¯¼ö¿¡ ¸ğ¼Ç ÀÌ¸§ ÀúÀå
+        switch (random_value)                                                           // í˜„ì¬ í™œì„±í™” ë˜ê³  ìˆëŠ” ëª¨ì…˜ì´ Idleì¸ì§€ ì•„ë‹Œì§€ í™•ì¸ì„ ìœ„í•´ string ë³€ìˆ˜ì— ëª¨ì…˜ ì´ë¦„ ì €ì¥
         {
             case 1:
                 Now_Action = "Dismissing Gesture";
@@ -176,7 +185,7 @@ public class StartUIAnime : MonoBehaviour
         StartCoroutine(nameof(AnimationOverCheck));
     }
     /// <summary>
-    /// ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ È®ÀÎ, Á¾·á ‰ç´Ù¸é Idle·Î ¸ğ¼Ç Return
+    /// ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ í™•ì¸, ì¢…ë£Œ ë¬ë‹¤ë©´ Idleë¡œ ëª¨ì…˜ Return
     /// </summary>
     /// <returns></returns>
     IEnumerator AnimationOverCheck()
@@ -194,7 +203,7 @@ public class StartUIAnime : MonoBehaviour
         StartCoroutine(nameof(Return));
     }
     /// <summary>
-    /// ÀÏ¹İ Idle ¸ğ¼Ç À¸·Î µ¹¾Æ¿ÔÀ» ½Ã ¹öÆ° È°¼ºÈ­ ÇÔ¼ö
+    /// ì¼ë°˜ Idle ëª¨ì…˜ ìœ¼ë¡œ ëŒì•„ì™”ì„ ì‹œ ë²„íŠ¼ í™œì„±í™” í•¨ìˆ˜
     /// </summary>
     /// <returns></returns>
     IEnumerator Return()
@@ -207,55 +216,75 @@ public class StartUIAnime : MonoBehaviour
         BananaManActingButton.interactable = true;
     }
     /// <summary>
-    /// Exit ÀÌº¥Æ® Ãß°¡
+    /// Exit ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     private void Get_Exit_Buttons_Event()
     {
         Exit_Button.onClick.AddListener(Utils.Instance.Exit_Program);
     }
     /// <summary>
-    /// Option °ü·Ã ÀÌº¥Æ® Ãß°¡
+    /// Option ê´€ë ¨ ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     private void Option_AddListener()
     {
-        SoundManager.Instance.GetSliders(BGM_S, SFX_S);                                                     // »ç¿îµå ½½¶óÀÌ´õ ÇÒ´ç
+        SoundManager.Instance.GetSliders(BGM_S, SFX_S);                                                     // ì‚¬ìš´ë“œ ìŠ¬ë¼ì´ë” í• ë‹¹
 
-        Utils.Instance.GetComponent<ViewOption>().Set_Variable(resoultion_drop, Main);                      // ÇØ»óµµ µå·Ó¸Ş´º, ÀüÃ¼È­¸é Ã¼Å©, Ä«¸Ş¶ó ÇÒ´ç
-        Option_Button.onClick.AddListener(Utils.Instance.GetComponent<ViewOption>().SetResolution);         // Option_Button Å¬¸¯ ½Ã Çö ½ÇÇàÁßÀÎ ¸ğ´ÏÅÍ ±âÁØ ÇØ»óµµ ¿É¼Ç °Ë»ö ¹× µå¶ø¸Ş´º¿¡ ÅØ½ºÆ® ÇÒ´ç
-        resoultion_drop.onValueChanged.AddListener(Utils.Instance.GetComponent<ViewOption>().OptionChange); // ResolutionDrop ¿¡ °ª º¯°æ½Ã index¹øÈ£¸¦ ÇÒ´çÇÒ ÇÔ¼ö ÇÒ´ç
-        screen_mode.onValueChanged.AddListener(Utils.Instance.GetComponent<ViewOption>().FullScreenCheck);  // ÀüÃ¼ È­¸é Ã¼Å© Åä±Û ¹öÆ° ÀÌº¥Æ® ÇÒ´ç
-        Apply_Button.onClick.AddListener(Utils.Instance.GetComponent<ViewOption>().Scene_Set_Resolution);   // Apply½Ã ÇØ»óµµ ¿É¼Ç ¹× ÀüÃ¼È­¸é ¿É¼Ç Àû¿ë ÈÄ º¯°æ
+        Utils.Instance.GetComponent<ViewOption>().Set_Variable(resoultion_drop, Main);                      // í•´ìƒë„ ë“œë¡­ë©”ë‰´, ì „ì²´í™”ë©´ ì²´í¬, ì¹´ë©”ë¼ í• ë‹¹
+        Option_Button.onClick.AddListener(Utils.Instance.GetComponent<ViewOption>().SetResolution);         // Option_Button í´ë¦­ ì‹œ í˜„ ì‹¤í–‰ì¤‘ì¸ ëª¨ë‹ˆí„° ê¸°ì¤€ í•´ìƒë„ ì˜µì…˜ ê²€ìƒ‰ ë° ë“œëë©”ë‰´ì— í…ìŠ¤íŠ¸ í• ë‹¹
+        resoultion_drop.onValueChanged.AddListener(Utils.Instance.GetComponent<ViewOption>().OptionChange); // ResolutionDrop ì— ê°’ ë³€ê²½ì‹œ indexë²ˆí˜¸ë¥¼ í• ë‹¹í•  í•¨ìˆ˜ í• ë‹¹
+        screen_mode.onValueChanged.AddListener(Utils.Instance.GetComponent<ViewOption>().FullScreenCheck);  // ì „ì²´ í™”ë©´ ì²´í¬ í† ê¸€ ë²„íŠ¼ ì´ë²¤íŠ¸ í• ë‹¹
+        Apply_Button.onClick.AddListener(Utils.Instance.GetComponent<ViewOption>().Scene_Set_Resolution);   // Applyì‹œ í•´ìƒë„ ì˜µì…˜ ë° ì „ì²´í™”ë©´ ì˜µì…˜ ì ìš© í›„ ë³€ê²½
     }
     /// <summary>
-    /// InGame ¾ÀÀ¸·Î ÀüÈ¯
+    /// InGame ì”¬ìœ¼ë¡œ ì „í™˜
     /// </summary>
     public void isInGame()
     {
         GameManager.instance.InGame = true;
     }
     /// <summary>
-    /// ½ÃÀÛ ¹öÆ° ÀÌº¥Æ® ¾À ·Îµå ÀÌº¥Æ® Ãß°¡
+    /// ì‹œì‘ ë²„íŠ¼ ì´ë²¤íŠ¸ ì”¬ ë¡œë“œ ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     private void StartButton_Init()
     {
         SoundManager.Instance.Sounds_BGM_Fade_Out();
 
-        Next_?.Invoke();
+        NewGame_Button.onClick.AddListener(Next_.Invoke);
+        Continue_Button.onClick.AddListener(Next_.Invoke);
     }
     /// <summary>
-    /// ½ÇÁ¦ ¾À µ¿ÀÛ ÇÔ¼ö
+    /// ì‹¤ì œ ì”¬ ë™ì‘ í•¨ìˆ˜
     /// </summary>
     public void StartGame()
     {
         SoundManager.Instance.Save_prview_SliderVale();
 
-        Utils.Instance.StageNumber++;
+        if(ContinueGame)
+        {
+            GameManager.instance.isLoad = true;
+            Utils.Instance.StageNumber = Utils.Instance.cleardata.data.scenenumber;
+        }else
+            Utils.Instance.StageNumber++;
+
         Utils.Instance.CombineStageName();
+    }
+    public void ChoiceContinue()
+    {
+        ContinueGame = true;
+    }
+    public void anotherAction()
+    {
+        NewGame_Button.gameObject.SetActive(false);
+        Continue_Button.gameObject.SetActive(false);
     }
     private void OnEnable()
     {
         ClearCanvas = GameManager.instance.ClearC.gameObject;
 
         ClearCanvas.SetActive(false);
+        GameManager.instance.isContinue = Utils.Instance.cleardata.LoadTransform();
+
+        if (!GameManager.instance.isContinue)
+            Continue_Button.interactable = false;
     }
 }

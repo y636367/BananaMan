@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     [System.Serializable]
-    public class After_ : UnityEvent { };                                                       // ÀÌº¥Æ® Àû¿ëÀ» À§ÇÑ ÀÎ½ºÅÏ½º Å¬·¡½º »ı¼º
+    public class After_ : UnityEvent { };                                                       // ì´ë²¤íŠ¸ ì ìš©ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤ ìƒì„±
     public After_ Option_On;
     public After_ Option_Close;
     public After_ Next_3;
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
     public bool isStart;
     public bool isPause;
     public bool InGame;
+    public bool isLoad;
+    public bool isContinue;
     public bool isForcedDeath;
     public bool DamageOn;
 
@@ -55,7 +58,7 @@ public class GameManager : MonoBehaviour
     //[HideInInspector]
     public bool isSceneLoad;
 
-    #region ½Ì±ÛÅæ
+    #region ì‹±ê¸€í†¤
     private void Awake()
     {
         if (instance == null)
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
             {
                 try
                 {
-                    if (Input.GetKeyDown(Utils.Instance.binding.Bindings[Action.Option]))                                   // Option È£Ãâ
+                    if (Input.GetKeyDown(Utils.Instance.binding.Bindings[Action.Option]))                                   // Option í˜¸ì¶œ
                     {
                         SP.Window_S();
                         Pause();
@@ -97,7 +100,7 @@ public class GameManager : MonoBehaviour
                 if (InGame)
                 {
                     if (Input.GetKeyDown(Utils.Instance.binding.Bindings[Action.ForcedDeath])
-                        && !Player.instance.playerDeath)                                                                    // °­Á¦ ¸®½ºÆù
+                        && !Player.instance.playerDeath)                                                                    // ê°•ì œ ë¦¬ìŠ¤í°
                     {
                         ForcedDeath();
                     }
@@ -111,7 +114,7 @@ public class GameManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// ÀÏ½ÃÁ¤Áö ¹× ¸Ş´º È£Ãâ
+    /// ì¼ì‹œì •ì§€ ë° ë©”ë‰´ í˜¸ì¶œ
     /// </summary>
     public void Pause()
     {
@@ -141,7 +144,7 @@ public class GameManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// °­Á¦ »ç¸Á(¸®½ºÆùÀ¸·Î ÀÌµ¿)
+    /// ê°•ì œ ì‚¬ë§(ë¦¬ìŠ¤í°ìœ¼ë¡œ ì´ë™)
     /// </summary>
     public void ForcedDeath()
     {
@@ -149,7 +152,7 @@ public class GameManager : MonoBehaviour
         Player.instance.ForcedDeath();
     }
     /// <summary>
-    /// ½ºÅ×ÀÌÁö Å¬¸®¾î
+    /// ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´
     /// </summary>
     public void FinishStage()
     {
@@ -157,13 +160,13 @@ public class GameManager : MonoBehaviour
         isStart = false;
     }
     /// <summary>
-    /// ¹ÙÀÎµù µÈ Å°µé Áß ÀÔ·Â°¨Áö
+    /// ë°”ì¸ë”© ëœ í‚¤ë“¤ ì¤‘ ì…ë ¥ê°ì§€
     /// </summary>
     private void CheckInputKey()
     {
         InputKey = false;
 
-        foreach (Action action in Enum.GetValues(typeof(Action)))                                                   // ¼±¾ğÇÑ EnumÀÇ °ª °¡Á®¿À±â(Enum.GetValues(typeof(ÀÌ¸§)))
+        foreach (Action action in Enum.GetValues(typeof(Action)))                                                   // ì„ ì–¸í•œ Enumì˜ ê°’ ê°€ì ¸ì˜¤ê¸°(Enum.GetValues(typeof(ì´ë¦„)))
         {
             if (action == Action.None)
                 continue;
@@ -176,25 +179,25 @@ public class GameManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// InGame¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ Á¶ÀÛ°ü·Ã Çàµ¿À» ÇÏ¿´´ÂÁö ¿©ºÎÈ®ÀÎ ÈÄ, ÀÏÁ¤ ½Ã°£ µ¿¾È Á¶ÀÛÀÌ È®ÀÎµÇÁö ¾Ê¾Ò´Ù¸é Idle ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î ÀüÈ¯
+    /// InGameì—ì„œ í”Œë ˆì´ì–´ê°€ ì¡°ì‘ê´€ë ¨ í–‰ë™ì„ í•˜ì˜€ëŠ”ì§€ ì—¬ë¶€í™•ì¸ í›„, ì¼ì • ì‹œê°„ ë™ì•ˆ ì¡°ì‘ì´ í™•ì¸ë˜ì§€ ì•Šì•˜ë‹¤ë©´ Idle ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ ì „í™˜
     /// </summary>
     private void ControlCheck()
     {
-        if(!InputKey&&!CameraisMoving)                                                                      // Ä«¸Ş¶ó¿òÁ÷ÀÓ°ú °ü·Ã Á¶ÀÛÀÔ·ÂÀÌ ¾ø¾ú´Ù¸é
+        if(!InputKey&&!CameraisMoving)                                                                      // ì¹´ë©”ë¼ì›€ì§ì„ê³¼ ê´€ë ¨ ì¡°ì‘ì…ë ¥ì´ ì—†ì—ˆë‹¤ë©´
         {
             if (!NowBoard)
             {
                 count += Time.deltaTime;
 
-                if (count >= HoldTime)                                                                      // Á¤ÇØÁø ½Ã°£ ÀÌ»ó ÀÔ·ÂÀÌ ¾ø¾ú´Ù¸é
+                if (count >= HoldTime)                                                                      // ì •í•´ì§„ ì‹œê°„ ì´ìƒ ì…ë ¥ì´ ì—†ì—ˆë‹¤ë©´
                 {
-                    NowBoard = true;                                                                        // ÇÃ·¡±× º¯¼ö °ª ÀüÈ¯ ¹× PlayerÀÇ »óÅÂ ÀüÈ¯
+                    NowBoard = true;                                                                        // í”Œë˜ê·¸ ë³€ìˆ˜ ê°’ ì „í™˜ ë° Playerì˜ ìƒíƒœ ì „í™˜
                     count = 0;
                     Player.instance.PlayerBoard();
                 }
             }
         }
-        else                                                                                                // Á¶ÀÛ È®ÀÎ ½Ã ÃÊ±âÈ­
+        else                                                                                                // ì¡°ì‘ í™•ì¸ ì‹œ ì´ˆê¸°í™”
         {
             count = 0;
             NowBoard = false;
@@ -206,7 +209,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = TImeScale_Value;
     }
     /// <summary>
-    /// FadeIn ¿Ï·á ÈÄ Á¶ÀÛ °¡´ÉÇÏ°Ô ²û Á¶°Çº¯¼ö °ª ¾À ·Îµå½Ã ¸¶´Ù ÃÊ±âÈ­
+    /// FadeIn ì™„ë£Œ í›„ ì¡°ì‘ ê°€ëŠ¥í•˜ê²Œ ë” ì¡°ê±´ë³€ìˆ˜ ê°’ ì”¬ ë¡œë“œì‹œ ë§ˆë‹¤ ì´ˆê¸°í™”
     /// </summary>
     private void OnEnable()
     {
@@ -223,5 +226,13 @@ public class GameManager : MonoBehaviour
             totalPlayTime += Time.deltaTime;
             yield return null;
         }
+    }
+    public void Re_Setting_Transmission_Player()
+    {
+        rm.New_RespawnPoint = Utils.Instance.cleardata.data.position;
+        rm.Default = false;
+
+        rm.Transmission_Player();
+        isLoad = false;
     }
 }

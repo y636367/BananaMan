@@ -4,15 +4,15 @@ using UnityEngine;
 public class Propel : MonoBehaviour
 {
     [SerializeField]
-    private Quaternion isRotateValue;                                                   // Çö ¿ÀºêÁ§Æ®ÀÇ È¸Àü°ª
+    private Quaternion isRotateValue;                                                   // í˜„ ì˜¤ë¸Œì íŠ¸ì˜ íšŒì „ê°’
     [SerializeField]
-    private bool anotherValue;                                                          // Æ¯Á¤ È¸Àü°ªÀ» ³Ö¾î¾ßÇÏ´Â°¡?
+    private bool anotherValue;                                                          // íŠ¹ì • íšŒì „ê°’ì„ ë„£ì–´ì•¼í•˜ëŠ”ê°€?
     [SerializeField]
-    private float rotationspeed;                                                        // È¸Àü ¼Óµµ
+    private float rotationspeed;                                                        // íšŒì „ ì†ë„
 
     [Tooltip("0-x 1-y 2-z")]
     [SerializeField]
-    private int Axis_rotation;                                                          // È¸ÀüÇÏ°íÀÚ ÇÏ´Â Ãà
+    private int Axis_rotation;                                                          // íšŒì „í•˜ê³ ì í•˜ëŠ” ì¶•
     private void Awake()
     {
         if (anotherValue)
@@ -26,7 +26,7 @@ public class Propel : MonoBehaviour
     {
         while(true)
         {
-            if (GameManager.instance.isPause)
+            while(GameManager.instance.isPause)
                 yield return null;
 
             switch (Axis_rotation)

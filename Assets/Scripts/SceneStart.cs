@@ -7,7 +7,7 @@ public class SceneStart : MonoBehaviour
 {
     #region Variable
     [System.Serializable]
-    public class After_ : UnityEvent { };                                                       // ÀÌº¥Æ® Àû¿ëÀ» À§ÇÑ ÀÎ½ºÅÏ½º Å¬·¡½º »ı¼º
+    public class After_ : UnityEvent { };                                                       // ì´ë²¤íŠ¸ ì ìš©ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤ ìƒì„±
     public After_ Next_1;
     public After_ Next_2;
     public After_ Next_3;
@@ -94,7 +94,7 @@ public class SceneStart : MonoBehaviour
         }
     }
     /// <summary>
-    /// ¾À ½ÃÀÛ½Ã ÃÊ±âÈ­
+    /// ì”¬ ì‹œì‘ì‹œ ì´ˆê¸°í™”
     /// </summary>
     private void Init()
     {
@@ -103,6 +103,9 @@ public class SceneStart : MonoBehaviour
         Next_2?.Invoke();
 
         ManagerAllocation();
+
+        if (GameManager.instance.isLoad)
+            GameManager.instance.Re_Setting_Transmission_Player();
 
         StartCoroutine(nameof(FadeIn));
     }
@@ -114,7 +117,7 @@ public class SceneStart : MonoBehaviour
         }
     }
     /// <summary>
-    /// Á¡Â÷ ¹à¾ÆÁü
+    /// ì ì°¨ ë°ì•„ì§
     /// </summary>
     /// <returns></returns>
     private IEnumerator FadeIn()
@@ -130,7 +133,7 @@ public class SceneStart : MonoBehaviour
         GameManager.instance.isStart = true;
     }
     /// <summary>
-    /// ¿ÜºÎ È£ÃâÀ» À§ÇÑ ÇÔ¼ö ¼±¾ğ
+    /// ì™¸ë¶€ í˜¸ì¶œì„ ìœ„í•œ í•¨ìˆ˜ ì„ ì–¸
     /// </summary>
     public void FadeOut_()
     {
@@ -139,7 +142,7 @@ public class SceneStart : MonoBehaviour
         StartCoroutine(nameof(FadeOut));
     }
     /// <summary>
-    /// Á¡Â÷ ¾îµÎ¿öÁü
+    /// ì ì°¨ ì–´ë‘ì›Œì§
     /// </summary>
     /// <returns></returns>
     public IEnumerator FadeOut()
@@ -153,7 +156,7 @@ public class SceneStart : MonoBehaviour
         Next_4?.Invoke();
     }
     /// <summary>
-    /// ViewOption, SoundManager¿¡ ÇÒ´çµÇ¾î¾ß ÇÒ º¯¼ö ÇÒ´ç
+    /// ViewOption, SoundManagerì— í• ë‹¹ë˜ì–´ì•¼ í•  ë³€ìˆ˜ í• ë‹¹
     /// </summary>
     public void Setting_Variation()
     {
@@ -167,7 +170,7 @@ public class SceneStart : MonoBehaviour
         Apply.onClick.AddListener(Utils.Instance.GetComponent<ViewOption>().Scene_Set_Resolution);
     }
     /// <summary>
-    /// Option ÆĞ³Î On
+    /// Option íŒ¨ë„ On
     /// </summary>
     public void Option_On()
     {
@@ -184,7 +187,7 @@ public class SceneStart : MonoBehaviour
         }
     }
     /// <summary>
-    /// Option ÆĞ³Î Off
+    /// Option íŒ¨ë„ Off
     /// </summary>
     public void Option_Off()
     {
@@ -198,21 +201,21 @@ public class SceneStart : MonoBehaviour
         catch (UnassignedReferenceException) { }
     }
     /// <summary>
-    /// Áß°£ ¿É¼Ç Ã¢ È°¼ºÈ­
+    /// ì¤‘ê°„ ì˜µì…˜ ì°½ í™œì„±í™”
     /// </summary>
     public void MiddleOption_On()
     {
         Middle_Panel.SetActive(true);
     }
     /// <summary>
-    /// Áß°£ ¿É¼Ç Ã¢ ºñÈ°¼ºÈ­
+    /// ì¤‘ê°„ ì˜µì…˜ ì°½ ë¹„í™œì„±í™”
     /// </summary>
     public void MiddleOption_Off()
     {
         Middle_Panel.SetActive(false);
     }
     /// <summary>
-    /// GameManager¿¡ OptionÃ¢ È°¼ºÈ­, ºñÈ°¼ºÈ­ ÀÌº¥Æ® Ãß°¡ ¹× MainÈ­¸é ÀÌº¥Æ® Ãß°¡
+    /// GameManagerì— Optionì°½ í™œì„±í™”, ë¹„í™œì„±í™” ì´ë²¤íŠ¸ ì¶”ê°€ ë° Mainí™”ë©´ ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
     private void OnEnable()
     {
@@ -224,22 +227,22 @@ public class SceneStart : MonoBehaviour
 
             goMain.onClick.AddListener(GoMain_Init);
 
-            if (Utils.Instance.StageNumber + 1 == Utils.Instance.sceneCount)                                                                // ÇöÀç ¾ÀÀÌ ¸¶Áö¸· ¾ÀÀÌ¶ó¸é Å¬¸®¾î½Ã ¸ŞÀÎÀ¸·Î ³Ñ¾î°¥ ¼ö ÀÖ°Ô ¿¬°á
+            if (Utils.Instance.StageNumber + 1 == Utils.Instance.sceneCount)                                                                // í˜„ì¬ ì”¬ì´ ë§ˆì§€ë§‰ ì”¬ì´ë¼ë©´ í´ë¦¬ì–´ì‹œ ë©”ì¸ìœ¼ë¡œ ë„˜ì–´ê°ˆ ìˆ˜ ìˆê²Œ ì—°ê²°
                 GameManager.instance.ClearC.Option_On.AddListener(GoMain_Init);
         }
         catch (NullReferenceException) { }
 
         if (TimerStart)
         {
-            StartCoroutine(GameManager.instance.GameTImer());                                                                              // ÇÃ·¹ÀÌ Å¸ÀÓ °è»êÀ» À§ÇÑ ÄÚ·çÆ¾ ½ÇÇà
+            StartCoroutine(GameManager.instance.GameTImer());                                                                              // í”Œë ˆì´ íƒ€ì„ ê³„ì‚°ì„ ìœ„í•œ ì½”ë£¨í‹´ ì‹¤í–‰
         }
     }
     /// <summary>
-    /// GameManagerÀÇ °¢Á¾ º¯¼ö °ª ÃÊ±âÈ­
+    /// GameManagerì˜ ê°ì¢… ë³€ìˆ˜ ê°’ ì´ˆê¸°í™”
     /// </summary>
     private void GoMain_Init()
     {
-        GameManager.instance.totalPlayTime = 0.0f;                                                                                         // ±â·Ï ÃÊ±âÈ­
+        GameManager.instance.totalPlayTime = 0.0f;                                                                                         // ê¸°ë¡ ì´ˆê¸°í™”
         GameManager.instance.totalDeath = 0;
 
         GameManager.instance.InGame = false;
@@ -254,7 +257,7 @@ public class SceneStart : MonoBehaviour
         FadeOut_();
     }
     /// <summary>
-    /// ¾À ·Îµå ¹× Ä¿¼­ °ü·Ã ÃÊ±âÈ­
+    /// ì”¬ ë¡œë“œ ë° ì»¤ì„œ ê´€ë ¨ ì´ˆê¸°í™”
     /// </summary>
     public void GoMain()
     {

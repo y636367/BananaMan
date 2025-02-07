@@ -31,7 +31,7 @@ public class HideBlock : MonoBehaviour
         StartHide();
     }
     /// <summary>
-    /// ¼±Çà ºí·°ÀÌ ¾Æ´Ñ°æ¿ì Hide ½ÇÇà
+    /// ì„ í–‰ ë¸”ëŸ­ì´ ì•„ë‹Œê²½ìš° Hide ì‹¤í–‰
     /// </summary>
     public void StartHide()
     {
@@ -39,7 +39,7 @@ public class HideBlock : MonoBehaviour
             StartCoroutine(nameof(Hide));
     }
     /// <summary>
-    /// ¸ÓÆ¼¸®¾ó ¾ËÆÄ °ª Á¶Àı·Î ¼û±è
+    /// ë¨¸í‹°ë¦¬ì–¼ ì•ŒíŒŒ ê°’ ì¡°ì ˆë¡œ ìˆ¨ê¹€
     /// </summary>
     /// <returns></returns>
     private IEnumerator Hide()
@@ -59,7 +59,7 @@ public class HideBlock : MonoBehaviour
             StartCoroutine(nameof(Appear));
     }
     /// <summary>
-    /// ¸ÓÆ¼¸®¾ó ¾ËÆÄ °ª Á¶Àı·Î ³ªÅ¸³¿
+    /// ë¨¸í‹°ë¦¬ì–¼ ì•ŒíŒŒ ê°’ ì¡°ì ˆë¡œ ë‚˜íƒ€ëƒ„
     /// </summary>
     /// <returns></returns>
     private IEnumerator Appear()

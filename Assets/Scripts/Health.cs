@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     [System.Serializable]
-    public class After_ : UnityEvent { };                                                       // ÀÌº¥Æ® Àû¿ëÀ» À§ÇÑ ÀÎ½ºÅÏ½º Å¬·¡½º »ı¼º
+    public class After_ : UnityEvent { };                                                       // ì´ë²¤íŠ¸ ì ìš©ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤ ìƒì„±
     public After_ Event;
 
     [SerializeField]
@@ -34,7 +34,7 @@ public class Health : MonoBehaviour
         Event?.Invoke();
     }
     /// <summary>
-    /// Player°¡ ÂøÁö ½Ã ¶³¾îÁø ³ôÀÌ¿¡ ºñ·ÊÇÏ¿© ¹Ş´Â µ¥¹ÌÁö °è»ê ÇÔ¼ö
+    /// Playerê°€ ì°©ì§€ ì‹œ ë–¨ì–´ì§„ ë†’ì´ì— ë¹„ë¡€í•˜ì—¬ ë°›ëŠ” ë°ë¯¸ì§€ ê³„ì‚° í•¨ìˆ˜
     /// </summary>
     /// <param name="Damage"></param>
     /// <returns></returns>
@@ -46,18 +46,18 @@ public class Health : MonoBehaviour
         {
             if (GameManager.instance.DamageOn)
             {
-                float DamageWeight = Mathf.Floor(Damage * 10f) / 10f;                               // ¼Ò¼öÁ¡ 1ÀÚ¸® ¸¸ ³²±â°í ´ú±â
+                float DamageWeight = Mathf.Floor(Damage * 10f) / 10f;                               // ì†Œìˆ˜ì  1ìë¦¬ ë§Œ ë‚¨ê¸°ê³  ëœê¸°
                 DamageValue = DamageWeight;
 
-                var range = new List<(float, float, float)>                                         // °¢ ¹üÀ§¿¡ ÇØ´çÇÏ´Â °¡ÁßÄ¡ ¼³Á¤ (Dictionary »ç¿ë)
+                var range = new List<(float, float, float)>                                         // ê° ë²”ìœ„ì— í•´ë‹¹í•˜ëŠ” ê°€ì¤‘ì¹˜ ì„¤ì • (Dictionary ì‚¬ìš©)
                 {
-                    (10f,15f,1.2f),                                                                 // (ÃÖ¼Ò, ÃÖ´ë, °¡ÁßÄ¡)
+                    (10f,15f,1.2f),                                                                 // (ìµœì†Œ, ìµœëŒ€, ê°€ì¤‘ì¹˜)
                     (15f,20f,1.4f),
                     (20f,25f,1.6f),
                     (25f,30f,1.8f),
                     (30f,35f,2.0f),
                     (35f,40f,2.2f),
-                    (40f,float.PositiveInfinity,2.4f),                                              // 40 º¸´Ù Å©´Ù¸é
+                    (40f,float.PositiveInfinity,2.4f),                                              // 40 ë³´ë‹¤ í¬ë‹¤ë©´
                 };
 
                 float multiplier = 1f;
@@ -76,9 +76,9 @@ public class Health : MonoBehaviour
                 NowHealth -= DamageValue;
             }
 
-            Event?.Invoke();                                                                        // µ¥¹ÌÁö °è»ê ÈÄ µî·ÏµÈ ÀÌº¥Æ® ÇÔ¼öµé ÁøÇà(UI °»½Å µî)
+            Event?.Invoke();                                                                        // ë°ë¯¸ì§€ ê³„ì‚° í›„ ë“±ë¡ëœ ì´ë²¤íŠ¸ í•¨ìˆ˜ë“¤ ì§„í–‰(UI ê°±ì‹  ë“±)
 
-            if (NowHealth <= 0f)                                                                    // Player »ç¸Á ÁøÇà
+            if (NowHealth <= 0f)                                                                    // Player ì‚¬ë§ ì§„í–‰
             {
                 player.Death();
                 StartCoroutine(nameof(RevivePlayer));
@@ -86,7 +86,7 @@ public class Health : MonoBehaviour
             }
             else
             {
-                if (DamageValue > LimitDamage)                                                           // µ¥¹ÌÁö¿¡ ºñ·ÊÇÑ °æÁ÷ ¸ğ¼Ç Ã¼Å©(·¡±×µ¹)
+                if (DamageValue > LimitDamage)                                                           // ë°ë¯¸ì§€ì— ë¹„ë¡€í•œ ê²½ì§ ëª¨ì…˜ ì²´í¬(ë˜ê·¸ëŒ)
                     return true;
                 else
                     return false;
@@ -96,7 +96,7 @@ public class Health : MonoBehaviour
             return false;
     }
     /// <summary>
-    ///  Player ºÎÈ° ÄÚ·çÆ¾ ¸Ş¼­µå
+    ///  Player ë¶€í™œ ì½”ë£¨í‹´ ë©”ì„œë“œ
     /// </summary>
     /// <returns></returns>
     public IEnumerator RevivePlayer()
@@ -111,7 +111,7 @@ public class Health : MonoBehaviour
 
         Init();
         if(!GameManager.instance.isForcedDeath)
-            GameManager.instance.rm.Transmission_Player(player);
+            GameManager.instance.rm.Transmission_Player();
         player.Revive();
     }
 }

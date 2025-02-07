@@ -19,31 +19,28 @@ public class EffectPause : MonoBehaviour
         StartCoroutine(nameof(Pause));
     }
     /// <summary>
-    /// ÆÄÆ¼Å¬ ÀÏ½ÃÁ¤Áö ¹× ´Ù½Ã Àç»ı
+    /// íŒŒí‹°í´ ì¼ì‹œì •ì§€ ë° ë‹¤ì‹œ ì¬ìƒ
     /// </summary>
     /// <returns></returns>
     private IEnumerator Pause()
     {
         while(true)
         {
-            if (GameManager.instance.isPause)
+            while(GameManager.instance.isPause)
             {
                 if (!ps.isPaused)
                     ps.Pause();
-                else
-                    yield return null;
+                yield return null;
             }
-            else
-            {
-                if(ps.isPaused)
-                    ps.Play();
-                else
-                    yield return null;
-            }
+
+            if(ps.isPaused)
+                ps.Play();
+            
+            yield return null;
         }
     }
     /// <summary>
-    /// ¾À¿¡ È°¼ºÈ­ µÇ¾ßÇÏ´Â °³¼ö°¡ Á¦ÇÑµÇÀÖ´Â °æ¿ì, ÀÌ¸¦ È®ÀÎÇÏ±â À§ÇÑ º¯¼öÀÇ °ª º¯°æ
+    /// ì”¬ì— í™œì„±í™” ë˜ì•¼í•˜ëŠ” ê°œìˆ˜ê°€ ì œí•œë˜ìˆëŠ” ê²½ìš°, ì´ë¥¼ í™•ì¸í•˜ê¸° ìœ„í•œ ë³€ìˆ˜ì˜ ê°’ ë³€ê²½
     /// </summary>
     private void OnDisable()
     {

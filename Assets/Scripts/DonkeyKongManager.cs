@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DonkeyKongManager : MonoBehaviour
 {
-    [Tooltip("¿ÀºêÁ§Æ® Ç®¸µ")]
+    [Tooltip("ì˜¤ë¸Œì íŠ¸ í’€ë§")]
     [SerializeField]
     private GameObject Barrel;
     private List<GameObject> barrel = new List<GameObject>();
@@ -12,14 +12,14 @@ public class DonkeyKongManager : MonoBehaviour
     [SerializeField]
     private int PoolSize;
     [SerializeField]
-    private float Time;
+    private float elapsedTime;
 
     [Space(10f)]
-    [Tooltip("¿ÀºêÁ§Æ® È¸Àü°ª")]
+    [Tooltip("ì˜¤ë¸Œì íŠ¸ íšŒì „ê°’")]
     public Vector3 RotationValue;
-    [Tooltip("¿ÀºêÁ§Æ® ¼Ó·Â°ª")]
+    [Tooltip("ì˜¤ë¸Œì íŠ¸ ì†ë ¥ê°’")]
     public float Velocity;
-    [Tooltip("¿ÀºêÁ§Æ® ¹æÇâ")]
+    [Tooltip("ì˜¤ë¸Œì íŠ¸ ë°©í–¥")]
     public Vector3 Direction;
     [Tooltip("0-x 1-y 2-z")]
     public int dirnumber;
@@ -27,73 +27,50 @@ public class DonkeyKongManager : MonoBehaviour
     private Transform PostionValue;
     private void Start()
     {
-        for (int index = 0; index < PoolSize; index++)                                                              // ¿ÀºêÁ§Æ® Ç®¸µÀ» À§ÇÑ ¼±ÀÛ¾÷
+        for (int index = 0; index < PoolSize; index++)                                                              // ì˜¤ë¸Œì íŠ¸ í’€ë§ì„ ìœ„í•œ ì„ ì‘ì—…
         {
-            GameObject Cylinder = Instantiate(Barrel, this.transform);                                              // Å©±â¸¸Å­ ¹Ì¸® »ı¼º
-            Cylinder.gameObject.SetActive(false);                                                                   // ºñÈ°¼ºÈ­
-            barrel.Add(Cylinder);                                                                                   // ¸®½ºÆ®¿¡ Ãß°¡
+            GameObject Cylinder = Instantiate(Barrel, this.transform);                                              // í¬ê¸°ë§Œí¼ ë¯¸ë¦¬ ìƒì„±
+            Cylinder.gameObject.SetActive(false);                                                                   // ë¹„í™œì„±í™”
+            barrel.Add(Cylinder);                                                                                   // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
         }
 
         StartCoroutine(nameof(GameStart));                                                                         
     }
     /// <summary>
-    /// ÄÚ·çÆ¾À¸·Î °è¼ÓÇØ¼­ µ¿ÀÛ
+    /// ì½”ë£¨í‹´ìœ¼ë¡œ ê³„ì†í•´ì„œ ë™ì‘
     /// </summary>
     /// <returns></returns>
     private IEnumerator GameStart()
     {
         int number = 0;
-
-        while(true)
-        {
-            yield return StartCoroutine(Timer(Time));                                                               // ÀÏÁ¤ ½Ã°£¸¶´Ù ¹İº¹
-
-            if (number >= PoolSize)                                                                                 // Ç® »çÀÌÁî¸¸Å­ µ¹°í³­ ÈÄ ÃÊ±âÈ­
-                number = 0;
-
-            if (!barrel[number].activeSelf)                                                                         // ºñÈ°¼ºÈ­ µÇ¾îÀÖ´Ù¸é
-            {
-                barrel[number].transform.position = this.transform.position;                                        // Æ÷Áö¼Ç Àç¼³Á¤(È¸Àü, °¢¼Ó·Â, ¼Ó·Â Àº ÀÚÃ¼ È°¼ºÈ­½Ã ÃÊ±âÈ­µÇ°Ô ½ºÅ©¸³Æ® ºÎÂø)
-                barrel[number].SetActive(true);
-            }
-            number++;
-        }
-    }
-    /// <summary>
-    /// Å¸ÀÌ¸Ó ±¸Çö
-    /// </summary>
-    /// <param name="time"></param>
-    /// <returns></returns>
-    private IEnumerator Timer(float time)
-    {
-        float t_time = time;
         float count = 0.0f;
-        float t_timer;
 
-        string numberSTR = t_time.ToString("G");                                                                   // °¡Àå °£´ÜÇÑ ÇüÅÂÀÇ ¹®ÀÚ¿­·Î º¯È¯(.000 ÀÇ °æ¿ì .000 ´ú¾î³¿)
-        int decimalPoint = numberSTR.IndexOf('.');                                                                 // ¼Ò¼öÁ¡ Æ÷ÇÔ ¿©ºÎ È®ÀÎ(Æ÷ÇÔ ½Ã Æ÷ÇÔµÈ ÀÎµ¦½º À§Ä¡¸¦ Á¤¼ö·Î ¹İÇÑ)
-
-        if (decimalPoint == -1)                                                                                    // ¹ÌÆ÷ÇÔÀÌ¹Ç·Î ÀÔ·ÂµÈ °ªÀº Á¤¼ö·Î ÆÇ´Ü
+        while (true)
         {
-            if (t_time < 10)                                                                                       // 10ÃÊ¸¦ ³Ñ¾î°¡Áö ¾Ê´Â ÃÊÀÇ °æ¿ì ÀÏ½ÃÁ¤Áö ½Ã ¿øÇÏ´Â´ë·Î Á¤Áö°¡ µÇÁö ¾Ê±â¿¡ ÇÑ´Ü°è ³·Àº ¼Ò¼öÁ¡´ÜÀ§·Î ¼³Á¤
-                t_timer = 0.1f;
-            else
-                t_timer = 1.0f;
-        }
-        else                                                                                                       // Æ÷ÇÔÀÌ¹Ç·Î ÀÔ·ÂµÈ °ªÀº ½Ç¼ö·Î ÆÇ´Ü
-        {
-            int decimalPlaces = numberSTR.Length - decimalPoint - 1;                                               // ÀÔ·ÂµÈ °ª¿¡ ¼Ò¼öÁ¡ÀÌ Æ÷ÇÔµÈ ÀÎµ¦½º °ª°ú 1À» ÇÕÇØ »©ÁÖ¾î ¼Ò¼öÁ¡ ±æÀÌ È®ÀÎ
-            t_timer = Mathf.Pow(10, -decimalPlaces);                                                               // 10ÀÇ °ÅµìÁ¦°öÀ» °è»êÇÏ¿© ¼Ò¼öÁ¡ ÀÌÇÏÀÇ ÀÚ¸´¼ö ÆÄ¾Ç
-        }
-
-        while (count < t_time)
-        {
-            if (GameManager.instance.isPause)                                                                   // Å¸ÀÌ¸Ó ¶ÇÇÑ ÀÏ½ÃÁ¤Áö ±¸ÇöÇÏ¿© ÀÏ½ÃÁ¤Áö½Ã Å¸ÀÌ¸Ó°¡ ´Ù µ¹¾Æ°£ ÈÄ ´Ù½Ã Àç»ı ½Ã Å¸ÀÌ¸Ó ¶ÇÇÑ Á¤ÁöµÇÁö ¾ÊÀº ½Ã½ºÅÛ ¿À·ù ¼öÁ¤
+            while (GameManager.instance.isPause)
                 yield return null;
 
-            count += t_timer;
+            count += Time.deltaTime;
 
-            yield return new WaitForSeconds(t_timer);
+            if (count >= elapsedTime)
+            {
+                count = 0;
+
+                int attempts = 0;
+                while (barrel[number].activeSelf&&attempts< PoolSize)
+                {
+                    number = (number + 1) % PoolSize;
+                    attempts++;
+                }
+
+                if (!barrel[number].activeSelf)                                                                         // ë¹„í™œì„±í™” ë˜ì–´ìˆë‹¤ë©´
+                {
+                    barrel[number].transform.position = this.transform.position;                                        // í¬ì§€ì…˜ ì¬ì„¤ì •(íšŒì „, ê°ì†ë ¥, ì†ë ¥ ì€ ìì²´ í™œì„±í™”ì‹œ ì´ˆê¸°í™”ë˜ê²Œ ìŠ¤í¬ë¦½íŠ¸ ë¶€ì°©)
+                    barrel[number].SetActive(true);
+                    number = (number + 1) % PoolSize;
+                }
+            }
+            yield return null;
         }
     }
 }

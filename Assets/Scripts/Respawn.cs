@@ -4,7 +4,7 @@ using UnityEngine.Events;
 public class Respawn : MonoBehaviour
 {
     [System.Serializable]
-    public class After_ : UnityEvent { };                                                       // ÀÌº¥Æ® Àû¿ëÀ» À§ÇÑ ÀÎ½ºÅÏ½º Å¬·¡½º »ı¼º
+    public class After_ : UnityEvent { };                                                       // ì´ë²¤íŠ¸ ì ìš©ì„ ìœ„í•œ ì¸ìŠ¤í„´ìŠ¤ í´ë˜ìŠ¤ ìƒì„±
     public After_ Next_;
 
     [SerializeField]
@@ -15,15 +15,19 @@ public class Respawn : MonoBehaviour
     [SerializeField]
     private bool isDefault;
     [SerializeField]
-    private bool Flag;
+    public bool Flag;
 
     [Space(10f)]
-    [Tooltip("¸®½ºÆù ÀÌ¸§")]
+    [Tooltip("Respawn Name")]
     public string PointName;
 
     [Space(10f)]
+    [Tooltip("Respawn Numbering")]
+    public int PointNumber;
+
+    [Space(10f)]
     [SerializeField]
-    private GameObject Lamp;
+    public GameObject Lamp;
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class Respawn : MonoBehaviour
         {
             GameManager.instance.rm.Default_RespawnPoint = RespawnPosition;
             GameManager.instance.rm.nowPointName = PointName;
+            GameManager.instance.rm.nowPointNumber = PointNumber;
 
             Next_?.Invoke();
         }
@@ -51,9 +56,13 @@ public class Respawn : MonoBehaviour
             if (other.CompareTag("Player") && !Flag)
             {
                 Flag = true;
+                Utils.Instance.cleardata.SaveTransform(this.transform);
                 GameManager.instance.rm.nowPointName = PointName;
+                GameManager.instance.rm.nowPointNumber = PointNumber;
                 GameManager.instance.rm.NewRespawnPoint(RespawnPosition);
-                Lamp.SetActive(true);
+
+                if(Lamp != null)
+                    Lamp.SetActive(true);
 
                 Next_?.Invoke();
             }

@@ -14,7 +14,9 @@ public class Utils : MonoBehaviour
     private string StageName;
     [SerializeField]
     public KeyBinding binding;
-    #region ½Ì±ÛÅæ
+    [SerializeField]
+    public TransformData cleardata;
+    #region ì‹±ê¸€í†¤
     public static Utils Instance;
 
     public GameObject PrograssBar;
@@ -36,11 +38,11 @@ public class Utils : MonoBehaviour
     }
     private void Start()
     {
-        sceneCount = SceneManager.sceneCountInBuildSettings;                                          // ºôµå ¼³Á¤Ã¢¿¡ ÇöÀç µî·ÏµÈ ¾ÀÀÇ °³¼ö È®ÀÎ
+        sceneCount = SceneManager.sceneCountInBuildSettings;                                          // ë¹Œë“œ ì„¤ì •ì°½ì— í˜„ì¬ ë“±ë¡ëœ ì”¬ì˜ ê°œìˆ˜ í™•ì¸
     }
     #endregion
     /// <summary>
-    /// ÇöÀç ½ÇÇà ÁßÀÎ ¾À ÀÌ¸§ È®ÀÎ
+    /// í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ ì”¬ ì´ë¦„ í™•ì¸
     /// </summary>
     /// <returns></returns>
     public static string GetActiveScene()
@@ -48,28 +50,28 @@ public class Utils : MonoBehaviour
         return SceneManager.GetActiveScene().name;
     }
     /// <summary>
-    /// ¾À º¯°æ ÇÔ¼ö
+    /// ì”¬ ë³€ê²½ í•¨ìˆ˜
     /// </summary>
     /// <param name="sceneName"></param>
     public void LoadScene(string sceneName = "")
     {
-        if (sceneName == "")                                                                          // ¸Å°³ º¯¼ö °ªÀÌ ºñ¾îÀÖ´Ù¸é ÇöÀç ½ÇÇà ÁßÀÎ ¾ÀÀ» Àç½ÇÇà
+        if (sceneName == "")                                                                          // ë§¤ê°œ ë³€ìˆ˜ ê°’ì´ ë¹„ì–´ìˆë‹¤ë©´ í˜„ì¬ ì‹¤í–‰ ì¤‘ì¸ ì”¬ì„ ì¬ì‹¤í–‰
         {
             SceneManager.LoadScene(GetActiveScene());
         }
-        else { sceneName = sceneName.ToLower(); }                                                     // ¾Æ´Ï¶ó¸é ¸Å°³º¯¼ö °ªÀ» ÀÌ¸§À¸·Î °®´Â ¾ÀÀ¸·Î ÀÌµ¿
+        else { sceneName = sceneName.ToLower(); }                                                     // ì•„ë‹ˆë¼ë©´ ë§¤ê°œë³€ìˆ˜ ê°’ì„ ì´ë¦„ìœ¼ë¡œ ê°–ëŠ” ì”¬ìœ¼ë¡œ ì´ë™
         {
             SceneManager.LoadScene(sceneName.ToString());
         }
     }
     /// <summary>
-    /// °¢ SceneÀÇ ÀÌ¸§ Çü½ÄÀ» ÅëÀÏ½ÃÅ°°í µÚ¿¡ ºÙ´Â ¼ıÀÚ¸¸ º¯°æÇÏ¿© ¾À ÀÌµ¿
+    /// ê° Sceneì˜ ì´ë¦„ í˜•ì‹ì„ í†µì¼ì‹œí‚¤ê³  ë’¤ì— ë¶™ëŠ” ìˆ«ìë§Œ ë³€ê²½í•˜ì—¬ ì”¬ ì´ë™
     /// </summary>
     public void CombineStageName()
     {
         if (StageNumber == sceneCount)
         {
-            StageNumber = 0;                                                                         // ½ºÅ×ÀÌÁö ¹øÈ£ ÃÊ±âÈ­(´ÙÀ½ È£Ãâ ½Ã Ã³À½ È­¸éÀ¸·Î ÀÌµ¿)
+            StageNumber = 0;                                                                         // ìŠ¤í…Œì´ì§€ ë²ˆí˜¸ ì´ˆê¸°í™”(ë‹¤ìŒ í˜¸ì¶œ ì‹œ ì²˜ìŒ í™”ë©´ìœ¼ë¡œ ì´ë™)
 
             StopCoroutine(GameManager.instance.GameTImer());
             GameManager.instance.ClearC.gameObject.SetActive(true);
@@ -82,7 +84,7 @@ public class Utils : MonoBehaviour
         }
     }
     /// <summary>
-    /// Á¾·á ÇÔ¼ö
+    /// ì¢…ë£Œ í•¨ìˆ˜
     /// </summary>
     public void Exit_Program()
     {

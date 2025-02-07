@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -166,7 +166,7 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void Zoom()
     {
-        float zoomAmount = Input.GetAxisRaw("Mouse ScrollWheel") * zoomspeed;                                                                        // 마우스 휠로 줌 양 조저
+        float zoomAmount = Input.GetAxisRaw("Mouse ScrollWheel") * zoomspeed;                                                                        // 마우스 휠로 줌 양 조절
         nowMaxDistance -= zoomAmount;                                                                                                                // 현재 카메라와 플레이어간 최대 거리에 도합
 
         nowMaxDistance = Mathf.Clamp(nowMaxDistance, minDistance, maxDistance);                                                                      // clamp로 설정된 최소 거리와 최대 거리 사이 고정
