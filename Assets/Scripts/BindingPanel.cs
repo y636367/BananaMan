@@ -41,8 +41,8 @@ public class BindingPanel : MonoBehaviour
 
     private bool Setting;
 
-    public KeyBinding _binding = new KeyBinding();                                                          // ¹ÙÀÎµùÀ» À§ÇÚ Å¬·¡½º »ı¼º
-    public SerializableInputBinding _sib;                                                                   // »ı¼ºÇÑ ¹ÙÀÎµù °ü¸®
+    public KeyBinding _binding = new KeyBinding();                                                          // ë°”ì¸ë”©ì„ ìœ„í•¸ í´ë˜ìŠ¤ ìƒì„±
+    public SerializableInputBinding _sib;                                                                   // ìƒì„±í•œ ë°”ì¸ë”© ê´€ë¦¬
 
     [SerializeField]
     private Action action;
@@ -65,20 +65,20 @@ public class BindingPanel : MonoBehaviour
         }
     }
     /// <summary>
-    /// ¹ÙÀÎµù ÃÊ±âÈ­
+    /// ë°”ì¸ë”© ì´ˆê¸°í™”
     /// </summary>
     public void Init()
     {
-        _binding.ResetAll(_binding);                                                            // ¹ÙÀÎµù ÃÊ±âÈ­
-        _sib = new SerializableInputBinding(_binding);                                          // »ı¼ºµÇ°í ÃÊ±âÈ­µÈ ¹ÙÀÎµù Å¬·¡½º ÇÒ´ç, ¹ÙÀÎµù °ü¸®ÇÒ Å¬·¡½º »ı¼º
-        _binding.LoadFromFile(_binding, _sib);                                                  // ÀÌÀü ¹ÙÀÎµù ±â·Ï ³²¾ÆÀÖ´Ù¸é Load
-        Save_bindForm();                                                                        // Çö ¹ÙÀÎµù »óÅÂ ÀúÀå
-        prevention.SetActive(false);                                                            // ¹ÙÀÎµù ½Ã ÀÔ·Â È­¸é ÀÔ·Â ¿¹¹æ ÆĞ³Î Off
+        _binding.ResetAll(_binding);                                                            // ë°”ì¸ë”© ì´ˆê¸°í™”
+        _sib = new SerializableInputBinding(_binding);                                          // ìƒì„±ë˜ê³  ì´ˆê¸°í™”ëœ ë°”ì¸ë”© í´ë˜ìŠ¤ í• ë‹¹, ë°”ì¸ë”© ê´€ë¦¬í•  í´ë˜ìŠ¤ ìƒì„±
+        _binding.LoadFromFile(_binding, _sib);                                                  // ì´ì „ ë°”ì¸ë”© ê¸°ë¡ ë‚¨ì•„ìˆë‹¤ë©´ Load
+        Save_bindForm();                                                                        // í˜„ ë°”ì¸ë”© ìƒíƒœ ì €ì¥
+        prevention.SetActive(false);                                                            // ë°”ì¸ë”© ì‹œ ì…ë ¥ í™”ë©´ ì…ë ¥ ì˜ˆë°© íŒ¨ë„ Off
 
         UI_Reset();
     }
     /// <summary>
-    /// ¹ÙÀÎµù ¹öÆ° ¸ğµÎ ¹Ì ¼±ÅÃ»óÅÂ·Î ÃÊ±âÈ­ ¹× ¹ÙÀÎµùµÈ Å° ÅØ½ºÆ® Ç¥½Ã
+    /// ë°”ì¸ë”© ë²„íŠ¼ ëª¨ë‘ ë¯¸ ì„ íƒìƒíƒœë¡œ ì´ˆê¸°í™” ë° ë°”ì¸ë”©ëœ í‚¤ í…ìŠ¤íŠ¸ í‘œì‹œ
     /// </summary>
     public void UI_Reset()
     {
@@ -100,7 +100,7 @@ public class BindingPanel : MonoBehaviour
         GameManager.instance.isBinding = false;
     }
     /// <summary>
-    /// Å° ¹ÙÀÎµù À» À§ÇÑ UI ÀüÈ¯ ÇÔ¼ö
+    /// í‚¤ ë°”ì¸ë”© ì„ ìœ„í•œ UI ì „í™˜ í•¨ìˆ˜
     /// </summary>
     /// <param name="t_button"></param>
     public void Choice_Key(Button t_button)
@@ -108,18 +108,18 @@ public class BindingPanel : MonoBehaviour
         GameManager.instance.isBinding = true;
 
         action = t_button.GetComponent<BindPairing>().action;
-        t_button.GetComponent<Image>().color = Color.green;                                                     // ¼±ÅÃµÇ¾úÀ½À» »öÀ¸·Î ¾Ë·ÁÁÜ
+        t_button.GetComponent<Image>().color = Color.green;                                                     // ì„ íƒë˜ì—ˆìŒì„ ìƒ‰ìœ¼ë¡œ ì•Œë ¤ì¤Œ
 
         foreach (var bt in Buttons)
         {
-            bt.interactable = false;                                                                            // ³ª¸ÓÁö ¹öÆ° ºñÈ°¼ºÈ­
+            bt.interactable = false;                                                                            // ë‚˜ë¨¸ì§€ ë²„íŠ¼ ë¹„í™œì„±í™”
         }
-        prevention.SetActive(true);                                                                             // È­¸é Å¬¸¯ ¿¹¹æ ÆĞ³Î On
+        prevention.SetActive(true);                                                                             // í™”ë©´ í´ë¦­ ì˜ˆë°© íŒ¨ë„ On
         
         Setting = true;
     }
     /// <summary>
-    /// ¹ÙÀÎµù »óÅÂÀÏ½Ã ÀÔ·ÂµÈ Å°·Î ¹ÙÀÎµù Àç ¼³Á¤
+    /// ë°”ì¸ë”© ìƒíƒœì¼ì‹œ ì…ë ¥ëœ í‚¤ë¡œ ë°”ì¸ë”© ì¬ ì„¤ì •
     /// </summary>
     /// <param name="mousenum"></param>
     private void ChangeKey(int mousenum = -1)
@@ -129,6 +129,15 @@ public class BindingPanel : MonoBehaviour
             if (Input.GetKeyDown(keyCode))
             {
                 _binding.Bind(_binding, action, keyCode);
+
+                for (int index = 0; index < _sib.bindPairs.Length; index++)
+                {
+                    if(_sib.bindPairs[index].value == keyCode)
+                    {
+                        _sib.bindPairs[index].value = KeyCode.None;
+                        break;
+                    }
+                }
                 for (int index = 0; index < _sib.bindPairs.Length; index++)
                 {
                     if (_sib.bindPairs[index].key == action)
@@ -144,7 +153,7 @@ public class BindingPanel : MonoBehaviour
         UI_Reset();
     }
     /// <summary>
-    /// ¹ÙÀÎµù µÈ Å° ÅØ½ºÆ® Ç¥Ãâ
+    /// ë°”ì¸ë”© ëœ í‚¤ í…ìŠ¤íŠ¸ í‘œì¶œ
     /// </summary>
     /// <param name="t_button"></param>
     private void Update_Text(Button t_button)
@@ -152,7 +161,7 @@ public class BindingPanel : MonoBehaviour
         Text code_text = t_button.GetComponentInChildren<Text>();
         KeyCode code = t_button.GetComponent<BindPairing>().keycode;
 
-        switch (code)                                                                                               // ¸¶¿ì½º ÀÔ·ÂÀÇ °æ¿ì Mouse0, Mouse1ÀÌ ¾Æ´Ñ ÀÓÀÇ ÅØ½ºÆ®·Î ´ëÃ¼
+        switch (code)                                                                                               // ë§ˆìš°ìŠ¤ ì…ë ¥ì˜ ê²½ìš° Mouse0, Mouse1ì´ ì•„ë‹Œ ì„ì˜ í…ìŠ¤íŠ¸ë¡œ ëŒ€ì²´
         {
             case KeyCode.Mouse0:
                 code_text.text = $"LeftButton";
@@ -169,7 +178,7 @@ public class BindingPanel : MonoBehaviour
         }
     }
     /// <summary>
-    /// ÇÒ´çµÈ ¹ÙÀÎµå °ª Àû¿ë
+    /// í• ë‹¹ëœ ë°”ì¸ë“œ ê°’ ì ìš©
     /// </summary>
     /// <param name="_bind"></param>
     private void Binding(BindPairing _bind)
@@ -183,14 +192,14 @@ public class BindingPanel : MonoBehaviour
         }
     }
     /// <summary>
-    /// Apply ¹öÆ°¿¡ ¹ÙÀÎµå ¼³Á¤ ÀúÀå ÇÔ¼ö ÇÒ´ç
+    /// Apply ë²„íŠ¼ì— ë°”ì¸ë“œ ì„¤ì • ì €ì¥ í•¨ìˆ˜ í• ë‹¹
     /// </summary>
     public void Save_bindForm()
     {
         Apply_b.onClick.AddListener(Set_sib);
     }
     /// <summary>
-    /// ¹ÙÀÎµù µÈ Å° °ª ÀúÀå
+    /// ë°”ì¸ë”© ëœ í‚¤ ê°’ ì €ì¥
     /// </summary>
     private void Set_sib()
     {
