@@ -2,6 +2,21 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+
+# Ignore everything by default
+*
+
+# Allow only the necessary Unity project folders
+!Assets/
+!Packages/
+!ProjectSettings/
+
+# Include all contents within allowed folders
+!Assets/**
+!Packages/**
+!ProjectSettings/**
+
+# Ignore cache and temporary files
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
