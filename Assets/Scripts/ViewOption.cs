@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -87,17 +87,24 @@ public class ViewOption : MonoBehaviour
     /// </summary>
     public void Scene_Set_Resolution()
     {
-        Screen.SetResolution(resolutions[resolutionNum].width, resolutions[resolutionNum].height, fullScreenMode);                                      // Screen 전체 옵션 적용    
+        Resolution currentResolution = resolutions[resolutionNum];                                                                                      // 현재 설정된 해상도 범위 가져오기
 
-        if ((float)setWidth / setHeight < (float)resolutions[resolutionNum].width / resolutions[resolutionNum].height)                                  // 기기의 해상도 비가 더 큰 경우
+        Screen.SetResolution(currentResolution.width, currentResolution.height, fullScreenMode);                                                        // Screen 전체 옵션 적용    
+
+        float deviceAspect = (float)setWidth / setHeight;                                                                                               // 현재 장치의 화면 비율과 설정할 해상도의 비율 계산
+        float targetAspect = (float)currentResolution.width / currentResolution.height;
+
+        if (deviceAspect < targetAspect)                                                                                                                // 기기의 해상도 비가 더 큰 경우
         {
-            float newWidth = ((float)setWidth / setHeight) / ((float)resolutions[resolutionNum].width / resolutions[resolutionNum].height);             // 새로운 너비
-            Main.rect = new Rect((1f - newWidth) / 2f, 0f, newWidth, 1f);                                                                               // 새로운 Rect 적용
+            float newWidth = deviceAspect / targetAspect;                                                                                               // 새로운 너비
+            if (float.IsNaN(newWidth)) newWidth = 1f;
+            Main.rect = new Rect((1f - newWidth) * 0.5f, 0f, newWidth, 1f);                                                                             // 새로운 Rect 적용
         }
         else                                                                                                                                            // 게임의 해상도 비가 더 큰 경우
         {
-            float newHeight = ((float)resolutions[resolutionNum].width / resolutions[resolutionNum].height) / ((float)setWidth / setHeight);            // 새로운 높이
-            Main.rect = new Rect(0f, (1f - newHeight) / 2f, 1f, newHeight);                                                                             // 새로운 Rect 적용
+            float newHeight = targetAspect / deviceAspect;                                                                                              // 새로운 높이
+            if (float.IsNaN(newHeight)) newHeight = 1f;
+            Main.rect = new Rect(0f, (1f - newHeight) * 0.5f, 1f, newHeight);                                                                           // 새로운 Rect 적용
         }
     }
     /// <summary>

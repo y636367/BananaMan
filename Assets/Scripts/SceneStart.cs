@@ -68,6 +68,7 @@ public class SceneStart : MonoBehaviour
     [Space(10f)]
     [SerializeField]
     private string BGM_Name;
+
     #endregion
     private void Awake()
     {
@@ -127,6 +128,7 @@ public class SceneStart : MonoBehaviour
             FadeImage.color = new Color(FadeImage.color.r, FadeImage.color.g, FadeImage.color.b, FadeImage.color.a - (Time.deltaTime / Speed));
             yield return null;
         }
+
         Next_3?.Invoke();
 
         BGM_Play();

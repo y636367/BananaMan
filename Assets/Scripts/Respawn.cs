@@ -60,8 +60,11 @@ public class Respawn : MonoBehaviour
                 GameManager.instance.rm.nowPointName = PointName;
                 GameManager.instance.rm.nowPointNumber = PointNumber;
                 GameManager.instance.rm.NewRespawnPoint(RespawnPosition);
+                
+                if (!isDefault && GameManager.instance.rm.Default)
+                    GameManager.instance.rm.Default = false;
 
-                if(Lamp != null)
+                if (Lamp != null)
                     Lamp.SetActive(true);
 
                 Next_?.Invoke();

@@ -16704,22 +16704,42 @@ PrefabInstance:
     - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 310892746}
     - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1827412768}
+    - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 563849516}
+    - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Button_S
       objectReference: {fileID: 0}
     - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 6820668391555881017, guid: 1f69500bd6a4f2c408037091dbca3d02,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SoundPack, Assembly-CSharp
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6898448614851820243, guid: 1f69500bd6a4f2c408037091dbca3d02,
         type: 3}
@@ -20868,6 +20888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acfdd5db5476e4246bf002ec92a4a71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1252508464085678743}
   Default_RespawnPoint: {x: 0, y: 0, z: 0}
   New_RespawnPoint: {x: 0, y: 0, z: 0}
   respawns: []
@@ -20875,7 +20896,6 @@ MonoBehaviour:
   NowPointHeight: 0
   nowPointName: 
   nowPointNumber: 0
-  player: {fileID: 1252508464085678743}
 --- !u!4 &1719733400
 Transform:
   m_ObjectHideFlags: 0

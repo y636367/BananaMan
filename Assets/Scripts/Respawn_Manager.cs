@@ -60,8 +60,10 @@ public class Respawn_Manager : MonoBehaviour
             }
         }
 
-        player._hipsBone.position = RespawnPoint;
+        player.transform.position = new Vector3(0, 0, 0);
+        player._hipsBone.position = new Vector3(0, 0, 0);
         player.transform.position = RespawnPoint;
+        player._hipsBone.position = RespawnPoint;
         NowPointHeight = RespawnPoint.y;
     }
     /// <summary>
